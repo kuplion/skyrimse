@@ -372,6 +372,12 @@ common:
     subs: [ 'Scrambled Bugs' ]
     condition: 'file("SKSE/Plugins/ScrambledBugs.dll")'
 
+  # &deletePlugin
+  - &deletePluginPanAIO
+    <<: *deletePlugin
+    subs: [ '**PAN_AIO_big.esp**' ]
+    condition: 'file("PAN_AIO_big.esp")'
+
   # &includesX
   - &includesMBBF
     <<: *includesX
@@ -2916,7 +2922,7 @@ plugins:
     msg:
       - <<: *alsoUseX
         subs: [ '[ENB Helper](https://www.nexusmods.com/skyrimspecialedition/mods/23174/)' ]
-        condition: 'file("../skse64_loader.exe") and file("../enblocal.ini") and not file("skse/plugins/ENBHelperSE.dll")'
+        condition: 'file("../skse64_loader.exe") and file("../enblocal.ini") and not file("skse/plugins/ENBHelperSE.dll") and not file("KiLoader/Plugins/ENBHelperSE.dll")'
     tag:
       - -C.Climate
       - -C.ImageSpace
@@ -5914,14 +5920,11 @@ plugins:
       - Deactivate
       - Graphics
 
-  - name: '(.*True Light|TL) .+\.esp'
+  - name: 'True Light.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/135488/'
         name: 'True Light'
-  - name: 'True Light - Shadows and Ambient.esp'
     group: *earlyLoadersGroup
-  - name: 'TL Bulbs ISL.esp'
-    group: *cellLightingGroup
     req:
       - name: 'ATLM.esp'
         display: '[Ambient Templates for Lighting Mods](https://www.nexusmods.com/skyrimspecialedition/mods/153425/)'
@@ -5931,8 +5934,6 @@ plugins:
         display: '[Inverse Square Lighting](https://www.nexusmods.com/skyrimspecialedition/mods/153542/)'
       - name: 'SKSE/Plugins/po3_LightPlacer.dll'
         display: '[Light Placer](https://www.nexusmods.com/skyrimspecialedition/mods/127557/)'
-      - name: 'SKSE/Plugins/SkyPatcher.dll'
-        display: '[SkyPatcher](https://www.nexusmods.com/skyrimspecialedition/mods/106659/)'
     inc:
       - *ENBSeries
       - 'ELFX Shadows.esp'
@@ -5947,7 +5948,7 @@ plugins:
   # True Light Patches
   - name: 'True Light - USSEP Patch.esp'
     req:
-      - 'True Light - Shadows and Ambient.esp'
+      - 'True Light.esp'
       - 'unofficial skyrim special edition patch.esp'
 
   - name: 'TrueStormsSE.esp'
@@ -6990,6 +6991,7 @@ plugins:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/19012/'
         name: 'Pandorable''s NPCs'
     msg:
+      - *deletePluginPanAIO
       - <<: *patch3rdParty
         subs:
           - 'Immersive Jewelry'
@@ -7014,6 +7016,7 @@ plugins:
         name: 'Pandorable''s NPCs - Dragonborn'
   - name: 'PAN_NPCs_DB.esp'
     msg:
+      - *deletePluginPanAIO
       - <<: *patch3rdParty
         subs:
           - 'Diverse Werewolves Collection'
@@ -7046,6 +7049,7 @@ plugins:
         name: 'Pandorable''s NPCs - Dawnguard'
   - name: 'PAN_NPCs_DG.esp'
     msg:
+      - *deletePluginPanAIO
       - <<: *patch3rdParty
         subs:
           - 'Dawnguard Arsenal'
@@ -7077,6 +7081,24 @@ plugins:
         util: 'SSEEdit v4.0.3'
   - name: 'PAN_NPCs_DG_MLU_Patch.esp'
     req: [ 'MLU.esp' ]
+
+  - name: 'PAN_NPCs_Males.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/42043/'
+        name: 'Pandorable''s NPCs - males'
+    msg: [ *deletePluginPanAIO ]
+
+  - name: 'PAN_NPCs_Males2.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/50617/'
+        name: 'Pandorable''s NPCs - males 2'
+    msg: [ *deletePluginPanAIO ]
+
+  - name: 'PAN_NPCs_Males3.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/110533/'
+        name: 'Pandorable''s NPCs - males 3'
+    msg: [ *deletePluginPanAIO ]
 
   - name: 'Serana - Hellraiser.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/10088/' ]
@@ -9146,6 +9168,7 @@ plugins:
   - name: 'Faultier''s PBR landscapes.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/125308/' ]
     after:
+      - 'Better Dynamic Ash.esp'
       - 'Better Dynamic Snow SE.esp'
       - 'BlendedRoads.esp'
     dirty:
@@ -9266,6 +9289,21 @@ plugins:
         util: '[SSEEdit v4.0.4b](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
         itm: 2
 
+  - name: 'Icfur Exist PBR landscapes.esp'
+    url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/143767/' ]
+    after:
+      - 'Better Dynamic Ash.esp'
+      - 'Better Dynamic Snow SE.esp'
+      - 'BlendedRoads.esp'
+    dirty:
+      - <<: *quickClean
+        crc: 0x50A2D516
+        util: '[SSEEdit v4.1.5p](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 2
+    clean:
+      - crc: 0x08C1FEA8
+        util: 'SSEEdit v4.1.5p'
+
   - name: 'Immersive Farms.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/19026/' ]
     group: *newContentGroup
@@ -9282,17 +9320,6 @@ plugins:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/26138/'
         name: 'Skyrim Landscape and Water Fixes'
   - name: 'Landscape and Water Fixes.esp'
-    msg:
-      - <<: *patchIncluded
-        subs: [ 'Complete Alchemy and Cooking Overhaul' ]
-        # 0x6D655320: Default v9.9.1A (Free Crops not checked in FOMOD)
-        condition: 'active("Complete Alchemy & Cooking Overhaul.esp") and checksum("Landscape and Water Fixes.esp", 6D655320) and not active("Landscape and Water Fixes - Patch - CACO.esp")'
-      - <<: *patchIncluded
-        subs: [ 'Enhanced Lights and FX' ]
-        condition: 'active("EnhancedLightsandFX.esp") and not active("Landscape and Water Fixes - Patch - ELFX.esp") and not active("ELFX Shadows.esp")'
-      - <<: *patchIncluded
-        subs: [ 'Landscape Fixes For Grass Mods' ]
-        condition: 'active("Landscape Fixes For Grass Mods.esp") and not active("Landscape and Water Fixes( - Patch)? - LFfGM( - GotT)?( - Water for ENB)?( patch)?\.esp")'
     tag:
       - C.Climate
       - C.ImageSpace
@@ -9316,6 +9343,8 @@ plugins:
       - 'Landscape and Water Fixes - Patch - LFfGM.esp'
   - name: 'Landscape and Water Fixes - Patch - ELFX.esp'
     inc: [ 'ELFX Shadows.esp' ]
+  - name: 'Landscape and Water Fixes - Patch - LFfGM - GotT.esp'
+    after: [ 'Undriel_QuaintRavenRock.esp' ]
   - name: 'Landscape and Water Fixes - Patch - Relighting Skyrim.esp'
     req: [ 'RelightingSkyrim_SSE.esp' ]
 
@@ -17845,26 +17874,12 @@ plugins:
   - name: 'TESL-LS-VanillaLSRemover.esp'
     group: *lateLoadersGroup
 
-  - name: 'Unique Region Names.esp'
-    url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/56452/' ]
-    msg:
-      - <<: *patchProvided
-        subs: [ 'Realistic Water Two SE' ]
-        condition: 'active("RealisticWaterTwo.esp") and not active("cutting room floor.esp") and not active("MissingEZs_AllExteriors.esp") and not active("RealisticWaterTwo - Unique Region Names.esp") and not active("RealisticWaterTwo - Unique Region Names - (Cutting Room Floor|MissingEZs_AllExteriors)\.esp")'
-      - <<: *patchProvided
-        subs: [ 'Realistic Water Two SE and Cutting Room Floor SSE' ]
-        condition: 'active("RealisticWaterTwo.esp") and active("cutting room floor.esp") and not active("RealisticWaterTwo - Unique Region Names - Cutting Room Floor.esp")'
-      - <<: *patchProvided
-        subs: [ 'Realistic Water Two SE and Missing Encounter Zones FIXED' ]
-        condition: 'active("RealisticWaterTwo.esp") and active("MissingEZs_AllExteriors.esp") and not active("RealisticWaterTwo - Unique Region Names - MissingEZs_AllExteriors.esp")'
-  - name: 'RealisticWaterTwo - Unique Region Names.esp'
-    msg:
-      - <<: *alreadyInX
-        subs: [ 'RealisticWaterTwo - Unique Region Names - Cutting Room Floor.esp' ]
-        condition: 'active("RealisticWaterTwo - Unique Region Names - Cutting Room Floor.esp")'
-      - <<: *alreadyInX
-        subs: [ 'RealisticWaterTwo - Unique Region Names - MissingEZs_AllExteriors.esp' ]
-        condition: 'active("RealisticWaterTwo - Unique Region Names - MissingEZs_AllExteriors.esp")'
+  - name: '(RealisticWaterTwo - )?Unique Region Names( - Cutting Room Floor| - MissingEZs_AllExteriors)?\.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/56452/'
+        name: 'Unique Region Names'
+  - name: 'RealisticWaterTwo - Unique Region Names( - Cutting Room Floor| - MissingEZs_AllExteriors)?\.esp'
+    msg: [ *patchOutdated ]
 
   - name: 'ValdacilsItemSorting.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/5224/' ]
@@ -21526,31 +21541,6 @@ plugins:
       - 'tpos_complete02_RTCWG.esp'
       - 'Windhelm Bridge Overhaul.esp'
     inc: [ 'CFTO.esp' ]
-    msg:
-      - <<: *patchIncluded
-        subs: [ 'Better Dynamic Snow' ]
-        condition: 'active("Better Dynamic Snow.esp") and not active("CC_BDSnow_Patch.esp")'
-      - <<: *patchIncluded
-        subs: [ 'City Entrances Overhaul - Markarth' ]
-        condition: 'active("Markarth Entrance Overhaul.esp") and not active("CC_CEOMark_Patch.esp")'
-      - <<: *patchIncluded
-        subs: [ 'City Entrances Overhaul - Windhelm' ]
-        condition: 'active("WindhelmEntranceOverhaul.esp") and not active("CC_CEOWind_Patch.esp")'
-      - <<: *patchIncluded
-        subs: [ 'Cutting Room Floor' ]
-        condition: 'active("cutting room floor.esp") and not active("CC_CRF_Patch.esp") and not active("CC_CRF_LFFGM_Patch.esp")'
-      - <<: *patchIncluded
-        subs: [ 'Dawnstar' ]
-        condition: 'active("dawnstar.esp") and not active("CC_ArtDws_Patch.esp") and not active("CC_ArtDws_IC_Patch.esp")'
-      - <<: *patchIncluded
-        subs: [ 'Landscape Fixes For Grass Mods' ]
-        condition: 'active("Landscape Fixes For Grass Mods.esp") and not active("CC_LFFGM_Patch.esp")'
-      - <<: *patchIncluded
-        subs: [ 'Storefront' ]
-        condition: 'active("storefront.esp") and not active("CC_ArtStorefront_Patch.esp")'
-      - <<: *patchIncluded
-        subs: [ 'The Great City of Solitude' ]
-        condition: 'active("The Great City of Solitude.esp") and not active("CC_TGCS_Patch.esp")'
     clean:
       - crc: 0xA69C30B9
         util: 'SSEEdit v4.0.3g'
@@ -26433,7 +26423,10 @@ plugins:
     msg:
       - <<: *alreadyInX
         subs: [ 'Eli_Breezehome [PATCH - RS + ELE].esp' ]
-        condition: 'file("Eli_Breezehome \[PATCH - (ELE|RS)\]\.esp")'
+        condition: 'file("Eli_Breezehome [PATCH - RS + ELE].esp") and file("ELE_SSE.esp") and file("RelightingSkyrim_SSE.esp")'
+      - <<: *useInstead
+        subs: [ 'Eli_Breezehome [PATCH - RS + ELE].esp' ]
+        condition: 'not file("Eli_Breezehome [PATCH - RS + ELE].esp") and file("ELE_SSE.esp") and file("RelightingSkyrim_SSE.esp")'
 
   - name: 'Eli_Halla.esp'
     url:
@@ -28401,6 +28394,13 @@ plugins:
     tag:
       - C.ImageSpace
       - C.Light
+
+  - name: 'Favor Quests Separated - Headhunter( Missives)? Patch\.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/180452/'
+        name: 'Favor Quests Separated - Headhunter Patch'
+    after: [ 'BountiesRedone_MissivesExtension.esp' ]
+    inc: [ 'Favor Quests Seperated - Bounty Quests.esp' ]
 
   - name: 'Fixes for Armor and Clothing Extension.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/28059/' ]
